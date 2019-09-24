@@ -17,7 +17,7 @@
 ###### I did manage to get the payable by the business id using the field "businessTransactions" under business and then using field "payable" under transaction, but I didn't have time to implement this.
 
 ## How to run
-###### clone the project
+###### git clone https://github.com/achieven/payables.git
 ###### cd payables
 ###### npm install
 ###### node webServer/index.js

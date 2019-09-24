@@ -20,4 +20,7 @@
 ###### git clone https://github.com/achieven/payables.git
 ###### cd payables
 ###### npm install
-###### node webServer/index.js
+###### node webServer
+
+## prerequisites
+##### This project was build with node v8.16.0 and npm 6.4.1. Though most likely many other version will not have any trouble (specifically any node version that supports es6), some mismatches might occur and cause bugs if using any different version

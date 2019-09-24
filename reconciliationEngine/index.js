@@ -1,5 +1,5 @@
-const EDITING_DISTANCE_THRESHOLD = 1;
-const DATE_DURATION_THRESHOLD = 1000 * 60 *60 * 24;
+const EDITING_DISTANCE_THRESHOLD  = 1;
+const DATE_DURATION_THRESHOLD     = 1000 * 60 *60 * 24;
 const AMOUNT_DIFFERENCE_THRESHOLD = 100;
 
 exports.build = (payables) => {
@@ -52,7 +52,6 @@ function getDateDistance (d1,d2) {
     const diffMS = Math.abs(new Date(d1) - new Date(d2));
     return diffMS;
 }
-
 
 //code from https://gist.github.com/andrei-m/982927
 function getEditDistance (str1, str2){

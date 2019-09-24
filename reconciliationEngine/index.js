@@ -87,7 +87,3 @@ function getEditDistance (str1, str2){
 
     return matrix[str2.length][str1.length];
 };
-
-function getPayablesByReferenceId (referenceId) {
-
-}

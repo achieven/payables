@@ -6,12 +6,9 @@ exports.build = (payables) => {
     this.payables = payables;
 };
 
-//if I had more time I would support multiple reference ids, as in the example
-//There is some duplicate logic in the matching function (as I implemented this), specifically in the matching of 2 out of 3. It is calling twice for each function. if I had more time I would investigate and reduce this duplicacy, hence - reduce the running time of it, as well as ease of readability
-//As well I would have implement some partial score. For example exact matching give spartial score of 1, editing distance of 1 would give a partial score of 50 and editing distance of 2 would give 25 etc.. (doesn't have to to be scaled by 2, but a Geometric progression of some sort, give or take fixed variables. So it would be in the pattern of f(x) = a + (1/factor)*distance, obviously with different factor for date/amount/referenceId
-//If I had more time I would write thorough tests with mocha.js for this function
-//I also started to implement editing distance between the dates (for example same date, give or take 1 day a month ago, or a year ago, but I don't have time for this right now)
-//I'm assuming correctness of input from client (implemented by web server) and from json file/graphQL
+/**
+ * See REAMDE comments
+ */
 
 exports.getPayables = (payment) => {
     const identicalByReference = this.payables.filter((payable) => {
@@ -21,13 +18,13 @@ exports.getPayables = (payment) => {
         return payment.payment_date === payable.dateOccurred && payment.amount === payable.amount;
     });
     const similarByReferenceAndDate = this.payables.filter((payable) => {
-        return getEditDistance(payment.payment_reference, payable.referenceId) <= EDITING_DISTANCE_THRESHOLD && getDateDistance(payment.payment_date, payable.dateOccurred) <= DATE_DURATION_THRESHOLD;
+        return getEditDistance(payment.payment_reference, payable.referenceId) <= EDITING_DISTANCE_THRESHOLD && getDateDuration(payment.payment_date, payable.dateOccurred) <= DATE_DURATION_THRESHOLD;
     });
     const similarByReferenceAndAmount = this.payables.filter((payable) => {
-        return getEditDistance(payment.payment_reference, payable.referenceId) <= EDITING_DISTANCE_THRESHOLD && getAmountDistance(payment.amount, payable.amount) <= AMOUNT_DIFFERENCE_THRESHOLD;
+        return getEditDistance(payment.payment_reference, payable.referenceId) <= EDITING_DISTANCE_THRESHOLD && getAmountDifference(payment.amount, payable.amount) <= AMOUNT_DIFFERENCE_THRESHOLD;
     });
     const similarByDateAndAmount = this.payables.filter((payable) => {
-        return getDateDistance(payment.payment_date, payable.dateOccurred) <= DATE_DURATION_THRESHOLD && getAmountDistance(payment.amount, payable.amount) <= AMOUNT_DIFFERENCE_THRESHOLD;
+        return getDateDuration(payment.payment_date, payable.dateOccurred) <= DATE_DURATION_THRESHOLD && getAmountDifference(payment.amount, payable.amount) <= AMOUNT_DIFFERENCE_THRESHOLD;
     });
     const uniqueMatches = [].concat(
         identicalByReference,
@@ -44,11 +41,11 @@ exports.getPayables = (payment) => {
 
 };
 
-function getAmountDistance (amount1, amount2) {
+function getAmountDifference (amount1, amount2) {
     return Math.abs(amount1 - amount2);
 }
 
-function getDateDistance (d1,d2) {
+function getDateDuration (d1,d2) {
     const diffMS = Math.abs(new Date(d1) - new Date(d2));
     return diffMS;
 }

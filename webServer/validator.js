@@ -9,7 +9,9 @@ module.exports = function (parameterName, validation) {
                 return res.status(400).send(`${parameterName} is not a string!`);
             }
         } else if (validation === Date) {
-            //If I had more time I would implement this
+            /**
+             * See REAMDE comments
+             */
             return next();
         }
 

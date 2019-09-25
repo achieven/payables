@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 })
 
 app.post(
-    '/',
+    '/link',
     validator('amount', Number),
     validator('payment_reference', String),
     validator('payment_date', Date),
